@@ -1,0 +1,123 @@
+﻿@using SampleDB.ViewModels
+@model EmployeeIndexViewModel
+
+<h3>This is employee list view</h3>
+<button type="button" id="btnAddEmployee">Add Employee</button>
+<table class="table tbl-primary">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+
+            <th>
+                Gender
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Action
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @{
+            foreach (var employee in Model.EmployeeViewModels)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.Gender</td>
+                    <td>@employee.DepartmentName</td>
+
+                    <td><button type="button" class="btnUpdate" id="@employee.Id">Update</button></td>
+                    <td>
+                        <button type="button" class="btnDelete" id="@employee.Id">
+                            Delete
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+
+    $(document).ready(function(){
+
+
+
+        $("#btnAddEmployee").click(function() {
+
+            $.ajax({
+                    type: "GET",
+                    url: '/EmployeeAjax/Create',
+                    success: function (data) {
+
+                        $('#IndexDiv').html(data);
+                    },
+                    Error() {
+                        alert("Error");
+                    }
+                });
+         });
+
+
+
+
+         $(".btnUpdate").click(function(){
+
+
+             var id= $(this).attr('id');
+             $.ajax({
+                 type:"GET",
+                 url:"/EmployeeAjax/Update",
+                 data:{id},
+                 success:function(data){
+                     $("#IndexDiv").html(data);
+                 },
+                 error:function(err){
+                     alert("Error");
+                 }
+
+             });
+
+         })
+
+
+         $(".btnDelete").click(function(){
+
+             if(confirm("Are you sure to delete the item?") == true)
+             {
+             var id = $(this).attr('id');
+
+             $.ajax({
+                 type:"GET",
+                 url:"/EmployeeAjax/Delete",
+                 data:{id},
+                 success:function(data){
+                     $("#IndexDiv").html(data);
+                 },
+                 error:function(err){
+                     alert("Error");
+                 }
+             });
+             }
+         })
+
+
+
+    });
+
+</script>

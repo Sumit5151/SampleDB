@@ -1,0 +1,14 @@
+﻿@{
+    TempData.Keep();
+
+}
+Name:@ViewBag.Name
+<br />
+Age:@ViewData["Age"]
+<br />
+message:@TempData.Peek("Message")
+
+<br /><br />
+<a asp-action="Create" asp-controller="PassingDataDemo">Create</a>
+
+

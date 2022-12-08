@@ -1,0 +1,27 @@
+﻿
+
+
+
+<div id="IndexDiv">
+</div>
+
+
+
+<script>
+        $(document).ready(function(){
+
+        $.ajax({
+            type: "GET",
+            url: '/EmployeeAjax/EmployeeList',
+            success: function (data) {
+
+                $('#IndexDiv').html(data);
+            },
+            Error() {
+                alert("Error");
+            }
+        });
+
+
+    });
+</script>

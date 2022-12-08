@@ -1,0 +1,74 @@
+﻿@model EmployeeViewModel
+
+
+<div class="container">
+
+    <div class="row">
+        <form id="frmUpdate">
+            <div class="col-md-6  offset-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Gender"></label>
+                    <select asp-for="Gender" class="form-control"
+                            asp-items="Html.GetEnumSelectList<GenderEnum>()">
+                        <option value="">-Select Gender-</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label asp-for="Department"></label>
+                    <select asp-for="DepartmentId" class="form-control">
+                        <option value="">-Select Department-</option>
+                        @{
+                            foreach (var dept in ViewBag.Departments)
+                            {
+                                <option value="@dept.Id">@dept.Name</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Department" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="button" id="btnUpdate">Submit</button>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $("#btnUpdate").click(function(){
+           
+            var empData= $("#frmUpdate").serialize();
+           
+            $.ajax({
+                type:"POST",
+                url:"/EmployeeAjax/Update",
+             
+                data:empData,
+                success:function(result){
+                    debugger;
+                    $("#IndexDiv").html(result);
+                },
+                error:function(err){
+                    alert("Error");
+                }
+            });
+        })
+    });
+</script>

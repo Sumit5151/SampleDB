@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DeptCountModel>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Department Name</th>
+            <th>Department Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(var dept in Model)
+            {
+                <tr>
+                <td>@dept.DeptName</td>
+                <td>@dept.DeptCount</td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
